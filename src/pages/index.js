@@ -5,6 +5,7 @@ import SEO from '../components/seo'
 
 import Skus from '../components/Products/Skus'
 import CartOverview from '../components/CartOverview'
+import CartItems from '../components/CartDetails'
 
 import { loadStripe } from '@stripe/stripe-js'
 import { CartProvider } from 'use-shopping-cart'
@@ -27,7 +28,10 @@ const CartExample = () => (
       allowedCountries={['US', 'GB', 'CA']}
       billingAddressCollection={true}
     >
-      <CartOverview />
+      <div>
+        <CartOverview />
+        <CartItems />
+      </div>
       <Skus />
     </CartProvider>
   </Layout>
