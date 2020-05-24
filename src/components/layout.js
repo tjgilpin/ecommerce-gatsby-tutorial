@@ -8,7 +8,10 @@ import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
 import stripeLogo from '../images/powered_by_stripe.svg'
 
-import '@stripe/stripe-js' // https://github.com/stripe/stripe-js#import-as-a-side-effect
+import { loadStripe } from '@stripe/stripe-js'
+import { CartProvider } from 'use-shopping-cart'
+
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -22,7 +25,14 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <>
+      <CartProvider
+      stripe={stripePromise}
+      successUrl={`${window.location.origin}/page-2/`}
+      cancelUrl={`${window.location.origin}/`}
+      currency="GBP"
+      allowedCountries={['US', 'GB', 'CA']}
+      billingAddressCollection={true}
+      >
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
@@ -45,7 +55,7 @@ const Layout = ({ children }) => (
             </div>
           </footer>
         </div>
-      </>
+      </CartProvider>
     )}
   />
 )

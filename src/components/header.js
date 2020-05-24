@@ -2,6 +2,9 @@ import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import CartOverview from '../components/CartOverview'
+import CartItems from '../components/CartDetails'
+
 const Header = ({ siteTitle }) => (
   <div
     style={{
@@ -26,8 +29,12 @@ const Header = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
-      </h1>
+      </h1>     
     </div>
+    <div>
+      <CartOverview />
+      <CartItems />
+    </div>                
   </div>
 )
 
