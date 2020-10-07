@@ -15,7 +15,7 @@ export default props => (
     query={graphql`
       query ProductPrices {
         prices: allStripePrice(
-          filter: { active: { eq: true }, currency: { eq: "usd" } }
+          filter: { active: { eq: true }, currency: { eq: "gbp" } }
           sort: { fields: [unit_amount] }
         ) {
           edges {
