@@ -27,6 +27,7 @@ export default props => (
               product {
                 id
                 name
+                images
               }
             }
           }
@@ -41,6 +42,7 @@ export default props => (
             name: price.product.name,
             price: price.unit_amount,
             currency: price.currency,
+            image: price.product.images,
           }
           return <SkuCard key={price.id} sku={newSku} />
         })}
