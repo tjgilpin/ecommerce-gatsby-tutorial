@@ -41,6 +41,7 @@ const SkuCard = ({ sku }) => {
           language: navigator.language,
         })}
       </p>
+      <p>{sku.description}</p>
       <button style={buttonStyles} onClick={() => addItem(sku)}>
         ADD TO CART
       </button>
