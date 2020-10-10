@@ -4,9 +4,10 @@ function Product({ pageContext }) {
   const { product } = pageContext
   return (
     <div>
-      Name: {product.product.name}
-      Price: {product.unit_amount}
-      Description: {product.product.description}
+      <h1>{product.product.name}</h1>
+      <img src={product.product.images} alt={product.product.name}/>
+      <p>{product.unit_amount}</p>
+      <p>{product.product.description}</p>
     </div>
   )
 }
