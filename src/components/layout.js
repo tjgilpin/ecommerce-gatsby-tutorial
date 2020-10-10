@@ -8,6 +8,13 @@ import stripeLogo from '../images/powered_by_stripe.svg'
 
 import '@stripe/stripe-js' // https://github.com/stripe/stripe-js#import-as-a-side-effect
 
+import CartOverview from './CartOverview'
+
+import { loadStripe } from '@stripe/stripe-js'
+import { CartProvider } from 'use-shopping-cart'
+
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
+
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -22,6 +29,16 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
+          <CartProvider
+            mode="client-only"
+            stripe={stripePromise}
+            successUrl={`${window.location.origin}/page-2/`}
+            cancelUrl={`${window.location.origin}/`}
+            currency="GBP"
+            allowedCountries={['US', 'GB', 'CA']}
+            billingAddressCollection={true}
+          >
+          <CartOverview />
         <div
           style={{
             margin: `0 auto`,
@@ -46,6 +63,7 @@ const Layout = ({ children }) => (
             </div>
           </footer>
         </div>
+        </CartProvider>        
       </>
     )}
   />
