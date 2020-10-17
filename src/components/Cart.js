@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useShoppingCart } from 'use-shopping-cart'
 
 function Cart(product) {
-  const { decrementItem, incrementItem, clearCart, cartDetails, formattedTotalPrice } = useShoppingCart()
+  const { decrementItem, incrementItem, removeItem, redirectToCheckout, cartCount, cartDetails, formattedTotalPrice } = useShoppingCart()
+  const [loading, setLoading] = useState(false)
 
   const entries = []
   for (const sku in cartDetails) {
@@ -42,7 +43,7 @@ function Cart(product) {
           >
             +
           </button>
-
+          {entry.quantity}
           {/* Decreases the quantity of the item */}
           <button
             onClick={() => decrementItem(sku)}
@@ -50,6 +51,13 @@ function Cart(product) {
             style={{ height: 50, width: 100, marginBottom: 30 }}
           >
             -
+          </button>
+          <button
+            onClick={() => removeItem(sku)}
+            aria-label={`Remove ${entry.name} from your cart`}
+            style={{ height: 50, width: 100, marginBottom: 30 }}
+          >
+            x
           </button>
         </section>
       </article>
@@ -61,7 +69,17 @@ function Cart(product) {
       <>
         {entries}
         {formattedTotalPrice}
-        <button onClick={clearCart}>Remove all items</button>
+        {cartCount}
+        <button
+        disabled={loading}
+        onClick={() => {
+          setLoading(true)
+          redirectToCheckout()
+        }}
+      >
+        {loading ? 'Loading...' : 'Checkout'}
+        </button>        
+        {/* <button onClick={clearCart}>Remove all items</button> */}
       </>
       )
   } else {
